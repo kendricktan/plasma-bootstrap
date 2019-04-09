@@ -1,0 +1,18 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  /* color: #f706cf; */
+  color: #aaa;
+  background: #241734;
+  font-family: "Open Sans", sans-serif;
+}
+
+h1,
+h2 {
+  /* font-family: "Michroma", sans-serif; */
+  font-family: "Megrim", sans-serif;
+}
