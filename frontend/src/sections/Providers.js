@@ -12,6 +12,7 @@ const Section = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-image: linear-gradient(225deg, #920075 0%, #241734 50%, #261447 100%);
 `;
 
 const HeroContent = styled.div`
@@ -88,6 +89,34 @@ const providerMap = {
 
 const ProviderLabel = styled.span`
   color: #2de2e6;
+`;
+
+const NextButton = styled.a`
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  margin-top: 24px;
+  padding: 18px 36px;
+  outline: 0;
+  border: 2px solid #2de2e6;
+  background: transparent;
+  color: #2de2e6;
+  border-radius: 2px;
+  font-size: 24px;
+  text-shadow: rgba(45, 226, 230, 0.95) 0 0 40px;
+  box-shadow: rgba(45, 226, 230, 0.65) 0 0 10px;
+  visibility: ${p => p.disabled ? "hidden" : "auto"};
+
+  &:hover {
+    box-shadow: rgba(45, 226, 230, 0.95) 0 0 40px;
+  }
+
+  &:active {
+    color: white;
+    border-color: white;
+    text-shadow: white 0 0 40px;
+    box-shadow: white 0 0 40px;
+  }
 `;
 
 export default class extends React.Component {
@@ -169,6 +198,7 @@ export default class extends React.Component {
               <div>Please select a provider</div>
             )}
           </Selected>
+        <NextButton href="#addons" disabled={selectedProvider === null}>Next</NextButton>
         </HeroContent>
       </Section>
     );

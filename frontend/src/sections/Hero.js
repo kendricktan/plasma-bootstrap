@@ -75,7 +75,7 @@ export default () => (
         A generator which provides a simple method of generating a Plasma node
         with add-ons.
       </Subtitle>
-      <HeroButton href="#providers">generate now</HeroButton>
+      <HeroButton href="#providers">Start Here</HeroButton>
     </HeroContent>
   </HeroSection>
 );
