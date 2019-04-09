@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
+import awsString from "../awsString";
+import bmString from "../bmString";
+
 const bgImgSrc =
   "https://images.unsplash.com/photo-1514771206769-bd41b0138cc0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80";
 
@@ -27,6 +30,7 @@ const Content = styled.div`
   z-index: 1;
   max-width: 80%;
   text-align: center;
+  transition: all 1s;
 `;
 
 const GenerateButton = styled.a`
@@ -76,7 +80,64 @@ const Hl = styled.span`
   color: #2de2e6;
 `;
 
+const GeneratedCode = styled.textarea`
+  width: 100%;
+  height: ${p => (p.show ? "480" : "0")};
+  border: ${p => (p.show ? "1px" : "0")} solid #f706cf;
+
+  border-radius: 12px;
+  color: #f706cf;
+  outline: none;
+  background: rgba(255, 255, 255, 0.1);
+  padding: ${p => (p.show ? "12px" : "0")};
+  transition: height 1s;
+  overflow: auto;
+  resize: none;
+`;
+
+const CopyButton = styled.div`
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  padding: 6px;
+  border-radius: 12px;
+  font-size: 12px;
+
+  border: 1px solid rgba(255, 255, 255, 0.5);
+
+  transition: opacity 1s;
+  pointer-events: ${p => (p.show ? "unset" : "none")};
+  opacity: ${p => (p.show ? "1" : "0")};
+
+  &:hover {
+    color: black;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+  }
+`;
+
+const ResetLink = styled.a`
+  font-family: "megrim";
+  color: #f706cf;
+  font-size: 16px;
+  text-decoration: none;
+  visibility: ${p => (p.show ? "unset" : "hidden")};
+`;
+
+const temp = {
+  foo: "bar",
+  bar: "baz",
+  some: {
+    thing: "cool",
+  },
+};
+
+const myCode = JSON.stringify(temp, null, 4);
+
 export default class extends React.Component {
+  state = { open: false };
+  showGenerated = () => this.setState({ open: true });
   render() {
     const { selectedProvider, addons } = this.props;
     const providerMsg = <Hl>{providerMap[selectedProvider]}</Hl>;
@@ -113,10 +174,22 @@ export default class extends React.Component {
       <Section id="generate">
         <BgImg />
         <Content>
-          <GenerateButton>GENERATE</GenerateButton>
+          <GenerateButton onClick={this.showGenerated}>GENERATE</GenerateButton>
           <p>
             This script will generate a Plasma app on {providerMsg} with{" "}
             {addonsMsg}
+          </p>
+          <div style={{ position: "relative", width: "100%" }}>
+            <GeneratedCode
+              show={this.state.open}
+              value={selectedProvider === "aws" ? awsString : bmString}
+            />
+            <CopyButton show={this.state.open}>Copy to Clipboard</CopyButton>
+          </div>
+          <p>
+            <ResetLink href="." show={this.state.open}>
+              RESET
+            </ResetLink>
           </p>
         </Content>
       </Section>
