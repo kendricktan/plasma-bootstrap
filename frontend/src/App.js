@@ -10,10 +10,10 @@ const Page = styled.div``;
 
 export default class extends React.Component {
   state = {
-    // selectedProvider: null,
-    // addons: [],
-    selectedProvider: "aws",
-    addons: ["graf", "pro"],
+    selectedProvider: null,
+    addons: [],
+    // selectedProvider: "aws",
+    // addons: ["graf", "pro"],
   };
 
   setSelectedProvider = providerId =>
