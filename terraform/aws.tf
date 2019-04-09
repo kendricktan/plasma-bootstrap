@@ -43,7 +43,7 @@ resource "aws_key_pair" "plasma-key" {
 }
 
 resource "aws_instance" "plasma-node" {
-  instance_type          = "t2.micro"
+  instance_type          = "c5.xlarge"
   ami                    = "ami-030cd17b75425e48d"
   vpc_security_group_ids = ["${aws_security_group.ec2.id}"]
   key_name               = "${aws_key_pair.plasma-key.key_name}"
@@ -60,28 +60,13 @@ resource "aws_instance" "plasma-node" {
   provisioner "remote-exec" {
     inline = [
       "sudo snap refresh",
-      "sudo apt-get -y update",
-      "sudo apt-get -y install nginx git",
-      "sudo service nginx start",
-      "sudo snap refresh",
       "sudo snap install docker",
       "sudo snap start docker",
       "sudo curl -L https://github.com/docker/compose/releases/download/1.24.0/docker-compose-Linux-x86_64 -o /usr/local/bin/docker-compose",
       "sudo chmod +x /usr/local/bin/docker-compose",
       "git clone https://github.com/kendricktan/elixir-omg.git",
       "cd elixir-omg",
-      "sudo docker-compose up"
-    ]
-  }
-  provisioner "file" {
-    source      = "nginx.conf"
-    destination = "/tmp/nginx.conf"
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "sudo cp /tmp/nginx.conf /etc/nginx/sites-enabled/default",
-      "sudo systemctl restart nginx"
+      "sudo docker-compose up -d"
     ]
   }
 }
